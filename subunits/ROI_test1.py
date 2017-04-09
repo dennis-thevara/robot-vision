@@ -46,6 +46,10 @@ while True:
 	cv2.rectangle(img,(Xa,Ya),(Xb,Yb),(0,0,0),2)
 	cv2.rectangle(img,(Xaa,Yaa),(Xbb,Ybb),(0,0,0),2)
 	
+	# Calculate overlap area:
+	box = np.int0([[X1,Y1],[X2,Y1],[X2,Y2],[X1,Y2]])
+	print cv2.contourArea(box)
+	
 	cv2.imshow('img',img)
 	
 	if cv2.waitKey(1) & 0xFF == ord('q'):
