@@ -1,0 +1,20 @@
+SETUP ARDUINO AS A SLAVE FOR THE RASPBERRY PI
+
+Install the Nanpy firmware on the Arduino
+Run in Raspi terminal:
+$ sudo apt-get update
+$ sudo apt-get install arduino
+$ sudo apt-get install git
+$ git clone https://github.com/nanpy/nanpy
+$ git clone https://github.com/nanpy/nanpy-firmware
+$ cd ~/nanpy-firmware/
+$ ./configure.sh
+$ cd ~
+$ cp -avr nanpy-firmware/ ~/sketchbook/libraries
+
+Install the Nanpy library for Python
+$ sudo pip install nanpy
+
+Open Arduino IDE
+File > sketchbook > libraries > nanpy-firmware > Nanpy
+Upload to Arduino
