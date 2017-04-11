@@ -6,19 +6,27 @@ vid = cv2.VideoCapture(0)
 
 def intersect(a,b):
 	# COORDINATE DEFINITION FOR INTERSECTION RECTANGLE:
-	if b[0] < a[0]:
-		x1 = a[0]
-	elif a[0] < b[0] & b[0] < a[2]:
-		x1 = b[0]
+	#if b[0] < a[0]:
+	#	x1 = a[0]
+	#elif a[0] < b[0] & b[0] < a[2]:
+	#	x1 = b[0]
+	#else:
+	#	x1 = b[0]
+	if b[0] > a[2]:
+		x1 = a[2]
 	else:
-		x1 = b[0]
+		x1 = max(b[0],a[0])
 	
-	if b[2] < a[2]:
-		x2 = b[2]
-	elif a[0] < b[2] & b[2] < a[2]:
-		x2 = b[2]
-	else:
+	if b[2] < a[0]:
 		x2 = a[2]
+	else:
+		x2 = min(b[2],a[2])
+	#if b[2] < a[2]:
+	#	x2 = b[2]
+	#elif a[0] < b[2] & b[2] < a[2]:
+	#	x2 = b[2]
+	#else:
+	#	x2 = a[2]
 	
 	y1 = b[1]
 	y2 = b[3]
