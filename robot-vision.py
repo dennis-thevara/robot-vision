@@ -67,8 +67,12 @@ while True:
 	
 	#DEFINING CENTRAL REGION OF INTEREST:
     roiH,roiW,_ = frame.shape
-    cv2.rectangle(frame,(roiW/3,roiH),(2*roiW/3,0),(255,128,0),2)
-    pointSetROI = [roiW/3,roiH,2*roiW/3,0]
+    cv2.rectangle(frame,(2*roiW/5,roiH),(3*roiW/5,0),(255,128,0),2)
+    pointSetROI = [2*roiW/5,roiH,3*roiW/5,0]
+	
+	# Define centroids:
+    ROI_Xcent = pointSetROI[0]+abs(pointSetROI[0]-pointSetROI[2])/2
+    ROI_Ycent = pointSetROI[1]+abs(pointSetROI[1]-pointSetROI[3])/2
 
     found,w=hog.detectMultiScale(frame, winStride=(8,8), padding=(32,32), scale=1.05)
     found_filtered = []
@@ -87,12 +91,21 @@ while True:
         cv2.rectangle(frame, (qx,qy), (qx+qw,qy+qh), (255,0,255), 2)
 		# Begin checking for overlap with ROI:
         pointSetFACE = [qx,qy,qx+qw,qy+qh]
+		# Define centroids:
+        FACE_Xcent = qx+(qw/2)
+        FACE_Ycent = qx+(qh/2)
+		
         (X1,Y1,X2,Y2) = intersect(pointSetROI,pointSetFACE)
         cv2.rectangle(frame,(X1,Y1),(X2,Y2),(0,0,0),2)
         # Calculate overlap area:
         overlapBox = np.int0([[X1,Y1],[X2,Y1],[X2,Y2],[X1,Y2]])
         if cv2.contourArea(overlapBox) != 0:
-			print "TURN!"
+			if FACE_Xcent < ROI_Xcent:
+				print "LEFT!"
+			else:
+				print "RIGHT!"
+
+			#print "TURN!"
         #print cv2.contourArea(overlapBox)
 
 	# UPPER BODY DETECTIONS:
