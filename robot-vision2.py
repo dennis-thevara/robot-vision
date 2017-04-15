@@ -56,7 +56,8 @@ while True:
     ROI_Xcent = pointSetROI[0]+abs(pointSetROI[0]-pointSetROI[2])/2
     ROI_Ycent = pointSetROI[1]+abs(pointSetROI[1]-pointSetROI[3])/2
 
-    StepSize = 8
+    
+    StepSize = 5
     EdgeArray = []
 
 
@@ -67,7 +68,10 @@ while True:
     
     imagewidth = imgEdge.shape[1] - 1
     imageheight = imgEdge.shape[0] - 1
-    
+
+    # Visialize detection horizon:
+    cv2.line(img,(0,imageheight/2), (imagewidth,imageheight/2),(255,128,0),2)
+
     for j in range (0,imagewidth,StepSize):    
         for i in range(imageheight-5,0,-1):    #step through every pixel in height of array from bottom to top
                                                #Ignore first couple of pixels as may trigger due to undistort
@@ -83,6 +87,8 @@ while True:
     #    cv2.line(img, EdgeArray[x], EdgeArray[x+1],(0,255,0),1) 
     for x in range (len(EdgeArray)):        #draw lines from bottom of the screen to points in ObstacleArray
         cv2.line(img, (x*StepSize,imageheight), EdgeArray[x],(0,255,0),1)
+        aaa,bbb = EdgeArray[x]
+        print bbb
 
     cv2.imshow('camera',img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
